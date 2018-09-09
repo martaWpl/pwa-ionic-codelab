@@ -94,7 +94,7 @@
         <li><a href="#add-template">Add templates, logic, style</a></li>
         <li><a href="#create-firebase">Create firebase project</a></li>
         <li><a href="#add-manifest">Add manifest.json</a></li>
-        <li><a href="#register-sw">Register service-worker</a></li>
+        <li><a href="#register-sw">Register Service Worker</a></li>
         <li><a href="#build-deploy-app">Build, deploy app</a></li>
         <li><a href="#test">Test your PWA app</a></li>
 
@@ -136,321 +136,65 @@
           <p><b>A small tip: </b>If you're beginner in Ionic UI use <a href="https://creator.ionic.io">Ionic creator</a>. Creator is a drag-&-drop prototyping tool for creating great apps using Ionic, with just a click of the mouse. If you want to use this tool just register on this page. Create a prototype of your app easily and export code to your local project.</p>
       </div>
   </section>
-
-  <!--<section id="sw-register">-->
-    <!--<h3>Code to register the service worker</h3>-->
-    <!--<div class="section-content">-->
-
-        <!--<p>This is the first step to making our web app work offline. Copy and paste this code to the <b>index file</b> just before the end of the body tag or in the head tag.</p>            -->
-        <!--<p><b>N/B : YOU NEED HTTPS</b> : We are going to use <a href="https://firebase.google.com/docs/hosting/deploying#section-hosting-setup" target="_blank">Firebase Hosting</a> later which shall have <b>HTTPS</b> already provisioned for our project.</p>-->
-
-      <!--<div class="mdl-tabs mdl-js-tabs">-->
-          <!--<div class="mdl-tabs__tab-bar">-->
-            <!--<a href="#tab1" class="mdl-tabs__tab is-active">Description</a>-->
-            <!--<a href="#tab2" class="mdl-tabs__tab">View Code</a>-->
-            <!--<a href="#tab3" class="mdl-tabs__tab">On Github</a>-->
-           <!-- - -->
-          <!--</div>-->
-
-          <!--<div class="mdl-tabs__panel is-active" id="tab1">-->
-              <!--<div class="code-with-text">-->
-              <!--This code checks to see if the service worker API is available, and if it is, the service worker at /service-worker.js is registered once the page is loaded.-->
-            <!--</div>-->
-
-        <!--</div>-->
-
-        <!--<div class="mdl-tabs__panel" id="tab2">-->
-            <!--<div class="code-with-text">-->
-                <!--First, we need to check if the browser supports service workers, and if it does, register the service worker.-->
-            <!--</div>-->
-      <!--<pre class="language-markup"><code>-->
-    <!--&lt;!&#45;&#45; register service worker &ndash;&gt;-->
-        <!--&lt;script>-->
-
-          <!--if ('serviceWorker' in navigator) -->
-          <!--{-->
-          <!--window.addEventListener('load', function() {-->
-            <!--navigator.serviceWorker.register('/service-worker.js')-->
-            <!--.then(function() { console.log("Service Worker Registered, Cheers to PWA Fire!"); });-->
-          <!--}-->
-          <!--);-->
-        <!--}  -->
-        <!--&lt;/script> -->
-    <!--&lt;!&#45;&#45; end of service worker &ndash;&gt;</code></pre>-->
-          <!--</div>-->
-          <!--<div class="mdl-tabs__panel is-active" id="tab3">-->
-              <!--<div class="code-with-text">-->
-                <!--<ul class="toc"> -->
-                    <!--<a href="https://github.com/mayeedwin/pwafire/blob/c1ba3823bc71781ef3b319c39192658e875b0e55/configuration.html#L4-L19" target="_blank">Latest Commit</a>-->
-                  <!--</ul>-->
-            <!--</div>-->
-
-        <!--</div>-->
-
-      <!--</div>-->
-
-  <!--</section>-->
-
-  <!--<section id="use-web-manifest">-->
-    <!--<h3>Using the web manifest</h3>-->
-    <!--<div class="section-content">-->
-      <!--<p>-->
-        <!--We are going to add a link tag to all the pages that encompass our web app inside the head tag, as follows; For our case, we only have one page, the <b>index.html</b>. Add the following code to it.-->
-      <!--</p>-->
-      <!--<pre class="language-markup"><code>-->
-      <!--&lt;!&#45;&#45; start of web manifest &ndash;&gt;-->
-      <!--&lt;link rel="manifest" href="/manifest.json">-->
-      <!--&lt;!&#45;&#45; end of web manifest &ndash;&gt;</code></pre>-->
-    <!--</div>-->
-  <!--</section>-->
-
-  <!--<section id="sw-config">-->
-    <!--<h3>Service Worker // service-worker.js config</h3>-->
-    <!--<div class="section-content">-->
-      <!--<p>-->
-        <!--<b>NOTE</b> :  The important thing to understand about the <b>Service Worker</b> is that you are in control of the network. You get to decide what is cached, how it is cached and how it should be returned to the user.-->
-      <!--</p>-->
-
-     <!--<div class="mdl-tabs mdl-js-tabs">-->
-        <!--<div class="mdl-tabs__tab-bar">-->
-          <!--<a href="#tab4" class="mdl-tabs__tab is-active">Description</a>-->
-          <!--<a href="#tab5" class="mdl-tabs__tab">View Code</a>-->
-          <!--<a href="#tab6" class="mdl-tabs__tab">On Github</a>-->
-        <!--</div>-->
-
-        <!--<div class="mdl-tabs__panel is-active" id="tab4">-->
-        <!--<div class="code-with-text">-->
-            <!--A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction i.e offline capabilities, push nitification, add to homescreen, sharable etc-->
-          <!--</div>-->
-
-      <!--</div>-->
-      <!--<div class="mdl-tabs__panel" id="tab5">-->
-          <!--<div class="code-with-text">-->
-            <!--Follow the steps as commented in the code below in order to correctly configure the <b>service-worker.js</b> file.-->
-          <!--</div>-->
-              <!--<pre class="language-javascript">-->
-                <!--<code>-->
-        <!--// A project PWA Fire written. All writes reserved https://pwafire.org 2018.-->
-        <!--// Author : Maye Edwin https://maye.gdgmoi.com-->
-                      <!---->
-        <!--// after a service worker is installed and the user navigates to a different page or -->
-        <!--// refreshes,the service worker will begin to receive fetch events-->
-                          <!---->
-        <!--self.addEventListener('fetch', function(event) {-->
-        <!--event.respondWith(caches.open('cache').then(function(cache) {-->
-        <!--return cache.match(event.request).then(function(response) {-->
-        <!--console.log("cache request: " + event.request.url);-->
-        <!--var fetchPromise = fetch(event.request).then(function(networkResponse) {           -->
-        <!--// if we got a response from the cache, update the cache                   -->
-        <!--console.log("fetch completed: " + event.request.url, networkResponse);-->
-        <!--if (networkResponse) {-->
-            <!--console.debug("updated cached page: " + event.request.url, networkResponse);-->
-              <!--cache.put(event.request, networkResponse.clone());}-->
-              <!--return networkResponse;-->
-                  <!--}, function (event) {   -->
-        <!--// rejected promise - just ignore it, we're offline!   -->
-                  <!--console.log("Error in fetch()", event);-->
-                  <!--event.waitUntil(-->
-                  <!--caches.open('cache').then(function(cache) { -->
-        <!--// our cache is named *cache* in the caches.open() above-->
-                  <!--return cache.addAll-->
-                  <!--([            -->
-        <!--//cache.addAll(), takes a list of URLs, then fetches them from the server-->
-        <!--// and adds the response to the cache.           -->
-        <!--// add your entire site to the cache- as in the code below; for offline access-->
-        <!--// If you have some build process for your site, perhaps that could -->
-        <!--// generate the list of possible URLs that a user might load.               -->
-                <!--'/', // do not remove this-->
-                <!--'/index.html', //default-->
-                <!--'/index.html?homescreen=1', //default-->
-                <!--'/?homescreen=1', //default-->
-                <!--'/assets/css/main.css',// configure as by your site ; just an example-->
-                <!--'/images/*',// choose images to keep offline; just an example-->
-        <!--// Do not replace/delete/edit the service-worker.js/ and manifest.js paths below-->
-                <!--'/service-worker.js',-->
-                <!--'/manifest.js',-->
-        <!--//These are links to the extenal social media buttons that should be cached;-->
-        <!--// we have used twitter's as an example-->
-              <!--'https://platform.twitter.com/widgets.js',       -->
-                <!--]);-->
-                <!--})-->
-                <!--);-->
-                <!--});-->
-        <!--// respond from the cache, or the network-->
-          <!--return response || fetchPromise;-->
-        <!--});-->
-        <!--}));-->
-        <!--});</code>-->
-    <!--<form class="codepen-button" action="https://codepen.io/mayeedwin/pen/eMOwry" method="POST" target="_blank"></form></pre>-->
-        <!--</div>-->
-
-        <!--<div class="mdl-tabs__panel is-active" id="tab6">-->
-            <!--<div class="code-with-text">-->
-                <!---->
-              <!--<ul class="toc"> -->
-                  <!--<a href="https://github.com/mayeedwin/pwafire/blob/master/pwafire-bundle/service-worker.js" target="_blank">Latest Commit</a>-->
-                <!--</ul>-->
-          <!--</div>-->
-
-      <!--</div>-->
-
-    <!--</div>-->
-    <!---->
-    <!--</div>-->
-  <!--</section>-->
-  <!--<section id="web-manifest-config">-->
-    <!--<h3>Web Manifest // manifest.json config</h3>-->
-    <!--<div class="section-content">-->
-      <!--<p>-->
-        <!--Configure/edit the <b>background</b> and <b>theme colors</b>, <b>display type</b>, the <b>Web App short name ( call it aything you want)</b>, the Web App name, <b>icons size</b> (icons in the icons folder are already in the required sizes) and your <b>icon/logo</b> paths. We have to state the <b>img type</b> eg image/ico or image/png. This is already done for you. You could use your own icons or logos and update later after this codelab.-->
-      <!--</p>-->
-      <!--<p>-->
-       <!--Leave the <b>start url</b> as it is though this can be anything you want; the value we’re using has the advantage of being meaningful to Google Analytics.-->
-      <!--</p>-->
-      <!--<div class="mdl-tabs mdl-js-tabs">-->
-          <!--<div class="mdl-tabs__tab-bar">-->
-            <!--<a href="#tab4" class="mdl-tabs__tab is-active">Description</a>-->
-            <!--<a href="#tab5" class="mdl-tabs__tab">View Code</a>-->
-            <!--<a href="#tab6" class="mdl-tabs__tab">On Github</a>-->
-           <!---->
-          <!--</div>-->
-  <!---->
-          <!--<div class="mdl-tabs__panel is-active" id="tab4">-->
-              <!--<div class="code-with-text">-->
-                 <!---->
-                      <!--Configuring the <b>manifest.json</b> file helps you to specify how you want your web app to look like when launched on the device.-->
-            <!--</div>-->
-        <!--</div>-->
-  <!---->
-  <!---->
-        <!--<div class="mdl-tabs__panel" id="tab5">-->
-            <!--<div class="code-with-text">-->
-                     <!--Configure the <b>manfest.json</b> file as directed above in order to fit your web app needs.-->
-              <!--</div>-->
-            <!--<pre class="language-markup"><code>-->
-          <!--{-->
-          <!--"background_color": "#fff",-->
-          <!--"display": "standalone",-->
-          <!--"orientation":"portrait",-->
-          <!--"theme_color": "#fff",           -->
-          <!--"short_name": "PWA Fire",-->
-          <!--"name": "PWA Fire",-->
-          <!--"description": "description or purpose of your progressive web app",-->
-          <!--"lang": "en-US",-->
-          <!--"icons": [-->
-          <!--{-->
-            <!--"src": "images/icons/icon-72x72.png",-->
-            <!--"sizes": "72x72",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-96x96.png",-->
-            <!--"sizes": "96x96",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-128x128.png",-->
-            <!--"sizes": "128x128",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-144x144.png",-->
-            <!--"sizes": "144x144",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-152x152.png",-->
-            <!--"sizes": "152x152",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-192x192.png",-->
-            <!--"sizes": "192x192",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-384x384.png",-->
-            <!--"sizes": "384x384",-->
-            <!--"type": "image/png"-->
-          <!--},-->
-          <!--{-->
-            <!--"src": "images/icons/icon-512x512.png",-->
-            <!--"sizes": "512x512",-->
-            <!--"type": "image/png"-->
-          <!--}-->
-          <!--],-->
-          <!--"start_url": "index.html?launcher=true",-->
-          <!--}</code>-->
-      <!--<form class="codepen-button" action="https://pwafire.org/developer/pwa" method="POST" target="_blank"></form></pre>-->
-          <!--</div>-->
-  <!---->
-          <!--<div class="mdl-tabs__panel is-active" id="tab6">-->
-              <!--<div class="code-with-text">-->
-                  <!---->
-                <!--<ul class="toc"> -->
-                    <!--<a href="https://github.com/mayeedwin/pwafire/blob/master/pwafire-bundle/manifest.json" target="_blank">Latest Commit</a>-->
-                  <!--</ul>-->
-            <!--</div>-->
-  <!---->
-        <!--</div>-->
-      <!--</div> <p>-->
-        <!--In the head tag, add theme color to all your pages as shown in the code below; You could use the same theme colour as in the <b>manfest.json</b> file.-->
-      <!--</p>-->
-      <!--<pre class="language-markup"><code>-->
-        <!--&lt;!&#45;&#45; theme-color &ndash;&gt;-->
-        <!--&lt;meta name="theme-color" content="#fff" />-->
-        <!--&lt;!&#45;&#45; end-theme-color &ndash;&gt;</code></pre>-->
-    <!--</div>-->
-  <!--</section>-->
-
-  <!--<section id="firebase-hosting">-->
-        <!--<h3>Firebase Hosting</h3>-->
-        <!--<div class="section-content">-->
-          <!--<p>If you're new to <a href="https://firebase.google.com/" target="_blank">Firebase</a>, you'll need to create your account and install some tools first.</p>-->
-          <!--<p>1. Create a <b>Firebase account</b> at <a href="https://firebase.google.com/console/" target="_blank">https://firebase.google.com/console/</a>.  -->
-              <!--Once your account has been created and you've signed in, you're ready to deploy!</p>-->
-          <!--<P>2. Create a new Firebase app at <a href="https://firebase.google.com/console/" target="_blank">https://firebase.google.com/console/</a></p>-->
-          <!--<p>3. Install the <b>Firebase tools</b> via npm (run this in your command line).The Firebase Command Line Interface (CLI) will allow you to serve the web app locally and deploy.</p>-->
-          <!--<pre><code><span class="pln">npm </span><span class="pun">-</span><span class="pln">g install firebase</span><span class="pun">-</span><span class="pln">tools</span></code></pre>-->
-          <!--<p>4. To verify that the CLI has been installed correctly, open a console and run:</p>-->
-          <!--<pre><code><span class="pln">firebase </span><span class="pun">&#45;&#45;</span><span class="pln">version</span></code></pre>-->
-          <!--<P>5. If you haven't recently signed in to the Firebase tools, update your credentials:</P>-->
-          <!--<pre><code><span class="pln">firebase login</span></code></pre>-->
-          <!--<p>6. Make sure you are in the <code>PWA Fire Profile</code> directory then Initialize your app to use Firebase. Select your Project ID and follow the instructions.</p>-->
-          <!--<p>When prompted, you can choose any Alias, such as <code>pwafire</code> for instance. Select <b>Firebase Hosting</b> as the Firebase CLI feature. Provide the default directory as <code>/</code>. To the other prompts, reply NO; <code>N</code></p>-->
-          <!--<pre><code><span class="pln">firebase </span><span class="kwd">init</span></code></pre>-->
-          <!--<p>8. Finally, deploy the app to Firebase:</p>-->
-          <!--<pre><code><span class="pln">firebase </span><span class="kwd">deploy</span></code></pre>-->
-          <!--<p>9. Celebrate. You're done! Your app will be deployed to the domain:</p>-->
-          <!--<pre><code><span class="pln">https://YOUR-FIREBASE-APP.firebaseapp.com</span></code></pre>-->
-          <!--<p>10. Visit your web app on your phone now. You should see an <b>"install to homescreen"</b> banner prompt! Welcome to <a href="https://www.linkedin.com/pulse/what-progressive-web-app-get-started-now-canaan-maye-edwin/" target="_blank">Canaan!</a> Further reading: <a href="https://firebase.google.com/console/" target="_blank">Firebase Hosting Guide.</a></p>      -->
-          <!--<p><img src="https://pwafire.org/developer/images/icons/aboutpwafire.gif" height="100px" alt="Mr. PWA Fire's Son Dance"> <img src="https://pwafire.org/developer/images/icons/aboutpwafire.gif" height="100px" alt="Mr. PWA Fire's Son Dance"></p>-->
-        <!--</div>-->
-        <!--<div class="download-button-container">-->
-          <!--<a href="https://pwafire-codelab.firebaseapp.com/" target="_blank">-->
-            <!--<button class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect">Launch Demo App</button>-->
-          <!--</a>-->
-        <!--</div>    -->
-      <!--</section>-->
-
-  <!--<section id="whats-next">-->
-    <!--<h3>What's next?</h3>-->
-    <!--<div class="section-content">-->
-      <!--<p>-->
-          <!--Donate a <a class="github-button" href="https://github.com/mayeedwin/offline-js"> Star </a> like, follow and <a href="">contribute</a> in any way. Learn how to use -->
-          <!--<b>firebase cloud firestore</b> in your realtime progressive web app <a href="../cloud-firestore-for-web/">in this codelab.</a>-->
-      <!--</p>-->
-    <!--</div>-->
-  <!--</section>-->
-
-  <!--<section id="license">-->
-    <!--<h3>License</h3>-->
-    <!--<div class="section-content">-->
-      <!--<p>-->
-        <!--Copyright PWA Fire, 2018. Licensed under an <a href="https://github.com/mayeedwin/pwafire/blob/master/LICENSE">MIT license.</a>-->
-      <!--</p>-->
-    <!--</div>-->
-  <!--</section>-->
+    <section>
+        <h3>Create firebase project</h3>
+        <div class="section-content">
+            <p>Log in firebase and create new project in <a href="https://console.firebase.google.com">firebase console</a>. If you don't have and account, register.</p>
+            <p>Log to firebase locally using command line: </p>
+            <pre class="language-markup">
+                <code>firebase login</code>
+            </pre>
+            <p>Build ionic project:</p>
+            <pre class="language-markup">
+                <code>ionic build --prod</code>
+            </pre>
+            <p>Init firebase project locally. Set proper project name, function: hosting and directory with bundle created during building process.</p>
+            <pre class="language-markup">
+                <code>firebase init</code>
+            </pre>
+        </div>
+    </section>
+    <section>
+        <h3>Add manifest.json</h3>
+        <div class="section-content">
+            <p>A default Ionic project contains Web Manifest. You need to replace existing json with your own - describing your app. <b>Don't forget to uncomment line with link to manifest.json in index.html file.</b></p>
+            <p>Define app properties inside manifest.json file. You can use <a href="https://pwafire.org/developer/tools/get-manifest/" target="_blank">Web Manifest Generator</a> from pwafire.org. You need to complete form, copy generated json and replace existing manifest.json code with this one json. </p>
+            <p><b>Tip:</b> Use <a href="https://www.pwabuilder.com/imageGenerator" target="_blank">Image Generator</a> and convert any image to app icons. Use generated icons and json file with icons paths inside your project.</p>
+        </div>
+    </section>
+    <section>
+        <h3>Register Service Worker</h3>
+        <div class="section-content">
+            <p>A default Ionic project contains Service Worker file and code for Service Worker registration. You can uncomment these lines in index.html and use ready service-worker.js file or customize it on your own: </p>
+            <pre  class="language-markup">
+                <code><script> if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+            .then(() => console.log('service worker installed'))
+            .catch(err => console.log('Error', err));
+  }</script>
+                </code>
+            </pre>
+            <p>To get more about Service Worker standard visit <a href="https://developers.google.com/web/ilt/pwa/introduction-to-service-worker" target="_blank">Google Developers page</a> and read Intro to Service Worker</p>
+        </div>
+    </section>
+    <section>
+        <h3>Build & deploy app</h3>
+        <div class="section-content">
+            <p>Build current version of the app and deploy it via firebase:</p>
+            <pre  class="language-markup">
+                <code>ionic build --prod
+firebase deploy</code>
+            </pre>
+            <p>After successful deployment run your app in a browser using url displayed in CLI.</p>
+        </div>
+    </section>
+    <section>
+        <h3>Test your PWA app</h3>
+        <div class="section-content">
+            <p>Test your PWA in a browser. Run audit tests using Lighthouse. Open tools for Developers in Chrome, select tab 'Audit' and  check Progressive Web App option. Run test and check the results. If you have less than 100% check details of your issues and get Google tips.</p>
+            <p>Make any changes if you need, rebuild your app and deploy once again.</p>
+        </div>
+    </section>
   
 </div>
 
